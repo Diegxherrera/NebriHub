@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import GeneralSelect from "@/components/GeneralSelect";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { User } from "@/app/members/columns";
 
 interface Props {
   triggerName: string;
@@ -61,7 +63,7 @@ export default function NewContentSheet({ triggerName, type }: Props) {
         <SheetHeader>
           <SheetTitle className="text-2xl">{getTitle()}</SheetTitle>
           <SheetDescription>
-            Este formulario te permite crear un/a nuevo
+            Este formulario te permite crear un/a nuev
             {getThing() === "profesor/a" || getThing() === "alumno/a"
               ? "o/a"
               : ""}{" "}
@@ -69,12 +71,14 @@ export default function NewContentSheet({ triggerName, type }: Props) {
             efecto.
           </SheetDescription>
         </SheetHeader>
+        <div className="flex flex-col gap-x-2">
+          <FieldsForType type={type} />
 
-        <FieldsForType type={type} />
-
-        {/* Submit button */}
-        <div className="mt-4">
-          <Button type="submit">Enviar</Button>
+          <div className="mt-4">
+            <Button type="submit" className="w-full">
+              Enviar
+            </Button>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
@@ -90,23 +94,37 @@ function FieldsForType({
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [professorClass, setProfessorClass] = useState<string>("");
+  const [selectedSubjects, setSubjects] = useState<string>("");
+  const [institutionClass, setInstitutionClass] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<string>("");
 
   switch (type) {
     case "teacher":
       return (
         <>
           {/* Input fields for creating a new teacher */}
-          <div className="mt-2">
+          <div className="mt-3 mb-4 gap-2">
             <GeneralSelect
-              type="institutions"
-              size="mediumPlus"
+              type="users"
+              size="w-full"
               usingLabel={true}
+              onSelect={setSelectedUser}
             />
+          </div>
+          <div className="mt-3 mb-4 gap-2">
             <GeneralSelect
               type="classes"
-              size="mediumPlus"
+              size="w-full"
               usingLabel={true}
-              onSelect={setProfessorClass}
+              onSelect={setInstitutionClass}
+            />
+          </div>
+          <div className="mt-3 mb-4 gap-2">
+            <GeneralSelect
+              type="subjects"
+              size="w-full"
+              usingLabel={true}
+              onSelect={setSubjects}
             />
           </div>
         </>

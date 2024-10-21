@@ -2,17 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  CalendarDays,
-  Home,
-  LineChart,
-  PanelsTopLeft,
-  Settings,
-  Users2,
-  School,
-  FolderPlus,
-  Plus,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -25,11 +14,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   Card,
@@ -39,7 +23,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Header from "@/components/Header";
-import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Select,
@@ -53,6 +36,7 @@ import { UserProvider, useUser } from "@/context/UserContext";
 import { AsideMenu } from "@/components/AsideMenu";
 import GeneralSelect from "@/components/GeneralSelect";
 import NewContentSheet from "@/components/NewContentSheet";
+import { Plus } from "lucide-react";
 export default function Dashboard() {
   return (
     <UserProvider>
@@ -65,10 +49,7 @@ export default function Dashboard() {
 
 export function DashboardComponent() {
   const [isMounted, setIsMounted] = useState(false);
-  const router = useRouter();
-  const pathName = usePathname();
   const { user } = useUser();
-  const [partialValue, setPartialValue] = useState("");
 
   useEffect(() => {
     setIsMounted(true);

@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 
 interface GeneralSelectProps {
   type: keyof SelectTypes;
-  size: "small" | "medium" | "mediumPlus" | "large";
+  size: "small" | "medium" | "mediumPlus" | "large" | "w-full";
   usingLabel: boolean | undefined;
   onSelect?: (value: ((prevState: string) => string) | string) => void;
 }
@@ -34,6 +34,8 @@ interface SelectTypes {
   institutions: string;
   subjects: string;
   teachers: string;
+  students: string;
+  users: string;
 }
 
 export default function GeneralSelect({
@@ -51,13 +53,19 @@ export default function GeneralSelect({
 
   switch (type) {
     case "classes":
-      typeTranslated = "Clases";
+      typeTranslated = "Clases asignadas";
       break;
     case "institutions":
       typeTranslated = "Institución";
       break;
     case "subjects":
-      typeTranslated = "Asignaturas";
+      typeTranslated = "Asignaturas asignadas";
+      break;
+    case "users":
+      typeTranslated = "Usuario";
+      break;
+    case "teachers":
+      typeTranslated = "Profesor/es";
       break;
     default:
       typeTranslated = "Tipo incorrecto para el select";
@@ -79,6 +87,9 @@ export default function GeneralSelect({
             url = "http://localhost:3005/subjects";
             break;
           case "teachers":
+            url = "http://localhost:3005/teachers";
+            break;
+          case "users":
             url = "http://localhost:3005/teachers";
             break;
           default:
@@ -118,12 +129,14 @@ export default function GeneralSelect({
         return "w-[300px]";
       case "large":
         return "w-[350px]";
+      case "w-full":
+        return "w-full";
       default:
         return "w-[200px]"; // default to medium if size is not recognized
     }
   };
 
-  const buttonLabel = selectedItem || `-- Elige ${typeTranslated} --`;
+  const buttonLabel = selectedItem || `${typeTranslated}`;
 
   const content = (
     <Command>
@@ -153,7 +166,11 @@ export default function GeneralSelect({
 
   return (
     <div className="flex flex-col">
-      {usingLabel ? <Label htmlFor={type}>{`${typeTranslated}`}</Label> : ""}
+      {usingLabel ? (
+        <Label htmlFor={type} className={"mb-0.5"}>{`${typeTranslated}`}</Label>
+      ) : (
+        ""
+      )}
       {isLoading ? (
         <p className="text-center">Loading...</p>
       ) : isDesktop ? (
@@ -163,7 +180,7 @@ export default function GeneralSelect({
               variant="outline"
               className={`${getSizeClass()} justify-between`}
             >
-              {buttonLabel}
+              <span className="text-muted-foreground">{buttonLabel}</span>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>

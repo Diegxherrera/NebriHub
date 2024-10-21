@@ -47,8 +47,6 @@ import { usePathname } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useUser } from "@/context/UserContext";
 import axios from "axios";
-import { router } from "next/client";
-import { Router, useRouter } from "next/router";
 
 const pathNameMap: { [key: string]: string } = {
   "/dashboard": "Panel de control",

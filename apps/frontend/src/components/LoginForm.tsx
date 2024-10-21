@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { LoginAlert } from "@/components/LoginError";
+import SeparatorWithText from "@/components/SeparatorWithText";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
@@ -106,7 +107,7 @@ export default function LoginForm() {
         <Button type="submit" className="w-full">
           Iniciar sesión
         </Button>
-        <Separator />
+        <SeparatorWithText />
         <div className="flex justify-around">
           <Button variant="outline" className="w-[160px]">
             Continuar con
