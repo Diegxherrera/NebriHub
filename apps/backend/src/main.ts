@@ -12,9 +12,9 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('E-learning API')
-    .setDescription('API para plataforma de e-learning')
-    .setVersion('1.0')
+    .setTitle('NebriHub API')
+    .setDescription('API para plataforma educativa NebriHub')
+    .setVersion('1.4')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

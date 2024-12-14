@@ -39,11 +39,11 @@ import NewContentSheet from "@/components/NewContentSheet";
 import { Plus } from "lucide-react";
 export default function Dashboard() {
   return (
-    <UserProvider>
-      <TooltipProvider>
-        <DashboardComponent />
-      </TooltipProvider>
-    </UserProvider>
+    //<UserProvider>
+    <TooltipProvider>
+      <DashboardComponent />
+    </TooltipProvider>
+    //</UserProvider>
   );
 }
 

@@ -151,13 +151,9 @@ export function AttendanceComponent() {
                     value={newClassName}
                     onChange={(e) => setNewClassName(e.target.value)}
                     required
+                    className="mb-2"
                   />
                 </div>
-                <GeneralSelect
-                  type={"teachers"}
-                  size={"large"}
-                  usingLabel={true}
-                />
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
