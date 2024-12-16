@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import useMediaQuery from "@custom-react-hooks/use-media-query";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface GeneralSelectProps {
   type: keyof SelectTypes;
@@ -136,11 +137,15 @@ export default function GeneralSelect({
     }
   };
 
-  const buttonLabel = selectedItem || `${typeTranslated}`;
+  const buttonLabel = selectedItem || `${typeTranslated} no definida`;
 
   const content = (
     <Command>
-      <CommandInput placeholder={`Buscar ${typeTranslated}`} />
+      <CommandInput
+        placeholder={`Buscar ${typeTranslated}`}
+        autoComplete="off"
+        autoCorrect={"off"}
+      />
       <CommandList>
         <CommandEmpty>No se encontraron: {typeTranslated}.</CommandEmpty>
         <CommandGroup>
@@ -167,21 +172,23 @@ export default function GeneralSelect({
   return (
     <div className="flex flex-col">
       {usingLabel ? (
-        <Label htmlFor={type} className={"mb-0.5"}>{`${typeTranslated}`}</Label>
+        <Label htmlFor={type} className={"mb-2"}>{`${typeTranslated}`}</Label>
       ) : (
         ""
       )}
       {isLoading ? (
-        <p className="text-center">Loading...</p>
+        <Skeleton className="w-[350px] h-[35px] rounded bg-gray-600 flex items-center pl-4 text-sm"></Skeleton>
       ) : isDesktop ? (
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className={`${getSizeClass()} justify-between`}
+              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300`}
             >
-              <span className="text-muted-foreground">{buttonLabel}</span>
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              <span className="text-muted-foreground dark:text-white">
+                {buttonLabel}
+              </span>
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-75" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className={`${getSizeClass()} p-0`}>
@@ -193,9 +200,10 @@ export default function GeneralSelect({
           <DrawerTrigger asChild>
             <Button
               variant="outline"
-              className={`${getSizeClass()} justify-between`}
+              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300`}
             >
               {buttonLabel}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-75" />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
