@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,12 @@ import Link from "next/link";
 import { Mail, RectangleEllipsis } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
 import { LoginAlert } from "@/components/LoginError";
+import SeparatorWithText from "@/components/SeparatorWithText";
+import Cookies from "js-cookie";
+import Google from "../../public/GoogleLogo";
+import Microsoft from "../../public/MicrosoftLogo";
+import ContinueWithButton from "@/components/ContinueWithButton";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
@@ -19,6 +23,15 @@ export default function LoginForm() {
   const [resultTitle, setTitle] = useState<string>("");
   const [iconColor, setIconColor] = useState<string>("currentColor");
   const router = useRouter();
+
+  // Check token and redirect if it exists
+  useEffect(() => {
+    const token = Cookies.get("token"); // Fetch the JWT token from cookies
+    if (token != null) {
+      // Optionally validate the token server-side here
+      router.push("/dashboard"); // Redirect to dashboards if token exists
+    }
+  }, [router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,15 +43,24 @@ export default function LoginForm() {
         { withCredentials: true }
       );
 
+      console.log(response.data); // Debug to ensure token is returned
+
       setTitle("Login Successful!");
-      setMessage("Redirecting to dashboard!");
-      setIconColor("currentColor"); // Restablecer el color al normal tras un login exitoso
+      setMessage("Redirecting to dashboards!");
 
       const { token } = response.data;
-      document.cookie = `token=${token}; path=/; secure; sameSite=strict;`;
+
+      // Set cookie without "secure" for local development
+      Cookies.set("token", token, {
+        path: "/",
+        expires: 14, // Expiration in days
+        sameSite: "strict",
+        secure: true,
+      });
+
       router.push("/dashboard");
     } catch (error: any) {
-      setIconColor("#ff2600"); // Cambiar los iconos a rojo tras un error de login
+      console.error("Login Error:", error);
       setTitle("Login Failed!");
       setMessage(`${error.response?.data?.message || "An error occurred"}`);
     }
@@ -46,20 +68,28 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="grid gap-2 text-center">
-        <h1 className="text-3xl font-bold">Inicio de sesión</h1>
-        <p className="text-balance text-muted-foreground">
-          Introduce tu correo electrónico corporativo más abajo.
+      <div className="grid gap-2 text-center items-center justify-center">
+        <div className="flex justify-center">
+          <Image
+            src={"/NebriHub.png"}
+            alt={""}
+            width={200}
+            height={200}
+            className="-m-16"
+          />
+        </div>
+        <h1 className="text-3xl font-bold text-accent/90 dark:text-gray-300">
+          Inicio de sesión
+        </h1>
+        <p className="text-balance text-muted-foreground dark:text-white/60">
+          Bienvenido de nuevo a la plataforma NebriHub.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="grid gap-4">
         <div className="grid gap-2">
           <div className="flex items-center">
-            {" "}
-            {/* Usamos items-center para centrar en el eje Y */}
             <Label htmlFor="email">Correo electrónico</Label>
-            <Mail className={`ml-2 h-3.5 w-3.5 text-${iconColor}`} />{" "}
-            {/* Cambia el color del icono */}
+            <Mail className={`ml-2 h-3.5 w-3.5 text-${iconColor}`} />
           </div>
           <Input
             id="email"
@@ -68,22 +98,20 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-300 dark:border-gray-600 dark:shadow-gray-800"
           />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
-            {" "}
-            {/* Usamos items-center aquí también */}
             <div className="flex items-center">
               <Label htmlFor="password">Contraseña</Label>
               <RectangleEllipsis
                 className={`ml-2 h-4 w-4.5 text-${iconColor}`}
-              />{" "}
-              {/* Cambia el color del icono */}
+              />
             </div>
             <Link
               href={"/forgot-password"}
-              className="ml-auto inline-block text-sm underline"
+              className="ml-auto inline-block text-sm underline dark:text-gray-300"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -92,35 +120,19 @@ export default function LoginForm() {
             id="password"
             type="password"
             value={password}
+            placeholder=""
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full bg-accent/90 hover:bg-accent">
           Iniciar sesión
         </Button>
-        <Separator />
-        <div className="flex justify-around">
-          <Button variant="outline" className="w-[160px]">
-            Continuar con
-            <Image
-              src="/google.webp"
-              width={15}
-              height={15}
-              alt="Google Logo"
-              className="m-1"
-            />
-          </Button>
-          <Button variant="outline" className="w-[160px]">
-            Continuar con
-            <Image
-              src="/microsoft.png"
-              width={20}
-              height={20}
-              alt="Microsoft Logo"
-              className="mr-1"
-            />
-          </Button>
+        <SeparatorWithText />
+        <div className="flex justify-between">
+          <ContinueWithButton icon={<Google />} service={"Google"} />
+          <ContinueWithButton icon={<Microsoft />} service={"Microsoft"} />
         </div>
       </form>
       <div className="mt-4 text-center text-sm">

@@ -20,12 +20,15 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useUser } from "@/context/UserContext";
 
 export function AsideMenu() {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
   console.log(pathName);
+
+  const { user } = useUser();
 
   useEffect(() => {
     setIsMounted(true);
@@ -48,26 +51,28 @@ export function AsideMenu() {
               }`}
             >
               <Home
-                className={`transition-all group-hover:scale-110 h-5 w-5 ${
-                  pathName === "/dashboard" ? "text-primary-foreground" : ""
+                className={`transition-all ${
+                  pathName === "/dashboard"
+                    ? "text-primary-foreground h-4 w-4"
+                    : "h-5 w-5"
                 }`}
               />
               <span className="sr-only">NebriHub</span>
             </div>
           </Link>
-          <Tooltip>
+          {/*<Tooltip>
             <TooltipTrigger asChild>
               <Link href="/calendar">
                 <div
                   className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    pathName === "/calendar"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
+                    pathName === '/calendar'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground transition-colors hover:text-foreground'
                   }`}
                 >
                   <CalendarDays
                     className={`transition-all group-hover:scale-110 ${
-                      pathName === "/calendar" ? "h-4 w-4" : "h-5 w-5"
+                      pathName === '/calendar' ? 'h-4 w-4' : 'h-5 w-5'
                     }`}
                   />
                   <span className="sr-only">Calendario</span>
@@ -75,6 +80,27 @@ export function AsideMenu() {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Calendario</TooltipContent>
+          </Tooltip>*/}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/attendance">
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    pathName === "/attendance"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground transition-colors hover:text-foreground"
+                  }`}
+                >
+                  <School
+                    className={`transition-all group-hover:scale-110 ${
+                      pathName === "/attendance" ? "h-4 w-4" : "h-5 w-5"
+                    }`}
+                  />
+                  <span className="sr-only">Asistencia</span>
+                </div>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Asistencia</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -96,27 +122,6 @@ export function AsideMenu() {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Proyectos</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link href="/attendance">
-                <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    pathName === "/attendance"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }`}
-                >
-                  <School
-                    className={`transition-all group-hover:scale-110 ${
-                      pathName === "/attendance" ? "h-4 w-4" : "h-5 w-5"
-                    }`}
-                  />
-                  <span className="sr-only">Asistencia</span>
-                </div>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Asistencia</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>

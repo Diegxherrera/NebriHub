@@ -104,26 +104,28 @@ export default function MemberCard() {
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline">Cancelar</Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Esta acción eliminará todas las modificaciones sin guardar.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Ir atrás</AlertDialogCancel>
-              <AlertDialogAction>Continuar</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+      <CardFooter className="flex">
+        <div className="w-full">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Cancelar</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Esta acción eliminará todas las modificaciones sin guardar.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Ir atrás</AlertDialogCancel>
+                <AlertDialogAction>Continuar</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
 
-        <Button>Actualizar</Button>
+        <Button className="w-full">Actualizar</Button>
       </CardFooter>
     </Card>
   );

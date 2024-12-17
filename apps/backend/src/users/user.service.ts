@@ -25,7 +25,9 @@ export class UserService {
 
   // Listar todos los usuarios
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    const users = await this.userRepository.find();
+    console.log('Users fetched:', users); // Log to verify data exists
+    return users;
   }
 
   // Buscar usuario por email
@@ -82,7 +84,7 @@ export class UserService {
   async savePasswordResetToken(userId: string, token: string): Promise<void> {
     await this.userRepository.update(userId, {
       resetToken: token,
-      resetTokenExpiry: new Date(Date.now() + 36000), // 1 hour from now
+      resetTokenExpiry: new Date(Date.now() + 3600000), // 1 hour from now
     });
   }
 

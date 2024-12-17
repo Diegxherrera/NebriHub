@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { InstitutionClass } from './class.entity';
+import { Institution } from '../institutions/institution.entity';
 
 @Injectable()
 export class ClassService {
@@ -19,6 +20,13 @@ export class ClassService {
     return this.classRepository.findOne({
       where: { id: id },
     });
+  }
+
+  async create(
+    institutionClassData: Partial<InstitutionClass>,
+  ): Promise<InstitutionClass> {
+    const newClass = this.classRepository.create(institutionClassData); // Crea una nueva instancia de Institution
+    return await this.classRepository.save(newClass); // Guarda la institución en la base de datos
   }
 
   async remove(id: string): Promise<void> {

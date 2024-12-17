@@ -18,7 +18,7 @@ export default function VerifyInstitutionPage() {
   return (
     <div
       className="relative flex items-center justify-center h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/login-cover.jpg')" }}
+      style={{ backgroundImage: "url('/login-cover.png')" }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
       <Card className="w-full max-w-md z-10 font-wei">

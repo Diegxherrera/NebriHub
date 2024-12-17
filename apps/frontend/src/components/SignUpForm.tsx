@@ -11,6 +11,10 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import GeneralSelect from "./GeneralSelect";
 import { Mail, RectangleEllipsis } from "lucide-react";
+import Google from "../../public/GoogleLogo";
+import Microsoft from "../../public/MicrosoftLogo";
+import SeparatorWithText from "@/components/SeparatorWithText";
+import ContinueWithButton from "@/components/ContinueWithButton";
 
 export default function SignUpForm({ userType }: { userType: string }) {
   const [email, setEmail] = useState<string>("");
@@ -68,6 +72,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
+              className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
             />
           </div>
           <div className="grid gap-2">
@@ -78,6 +83,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
+              className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
             />
           </div>
         </div>
@@ -93,6 +99,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
           />
         </div>
         <div className="grid gap-2">
@@ -106,6 +113,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
           />
         </div>
         <GeneralSelect
@@ -114,31 +122,13 @@ export default function SignUpForm({ userType }: { userType: string }) {
           size={"large"}
           usingLabel={true}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full bg-accent/90 hover:bg-accent">
           Crear cuenta
         </Button>
-        <Separator />
+        <SeparatorWithText />
         <div className="flex justify-around">
-          <Button variant="outline" className="w-[160px]">
-            Continuar con
-            <Image
-              src="/google.webp"
-              width={15}
-              height={15}
-              alt="Google Logo"
-              className="m-1"
-            />
-          </Button>
-          <Button variant="outline" className="w-[160px]">
-            Continuar con
-            <Image
-              src="/microsoft.png"
-              width={20}
-              height={20}
-              alt="Microsoft Logo"
-              className="mr-1"
-            />
-          </Button>
+          <ContinueWithButton icon={<Google />} service={"Google"} />
+          <ContinueWithButton icon={<Microsoft />} service={"Microsoft"} />
         </div>
       </form>
       {message && <p className="mt-4 text-center text-sm">{message}</p>}
@@ -146,12 +136,6 @@ export default function SignUpForm({ userType }: { userType: string }) {
         ¿Ya tienes una cuenta?{" "}
         <Link href={"/login"} className="underline">
           Iniciar sesión
-        </Link>
-      </div>
-      <div className="text-center text-sm -mt-2">
-        ¿Eres un {oppositeUserType}?{" "}
-        <Link href={oppositeUserTypeUrl} className="underline">
-          Registrarse como {oppositeUserType}
         </Link>
       </div>
     </>

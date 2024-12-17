@@ -1,5 +1,6 @@
 {
-  "name": "calendar-app",
+  "name": "nebrihub",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "turbo build",

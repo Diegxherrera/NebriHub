@@ -19,35 +19,39 @@ export type User = {
   lastName: string;
   email: string;
   subject: string[];
-  class: string;
+  class: string | null;
 };
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "first_name",
+    accessorKey: "firstName", // Updated to match the actual key in the data
     header: () => <div className="text-left p-2">Nombre</div>,
     cell: ({ row }) => {
-      const firstName: string = row.getValue("first_name");
+      const firstName: string = row.getValue("firstName");
 
       return <div className="text-left font-medium p-2">{firstName}</div>;
     },
   },
   {
-    accessorKey: "last_name",
+    accessorKey: "lastName", // Updated to match the actual key in the data
     header: () => <div className="text-left p-2">Apellidos</div>,
     cell: ({ row }) => {
-      const lastName: string = row.getValue("last_name");
+      const lastName: string = row.getValue("lastName");
 
       return <div className="text-left font-medium p-2">{lastName}</div>;
     },
   },
   {
-    accessorKey: "class",
+    accessorKey: "class", // Already correct, but handling the possibility of null
     header: () => <div className="text-left p-2">Clase</div>,
     cell: ({ row }) => {
-      const course: string = row.getValue("class");
+      const course: string | null = row.getValue("class");
 
-      return <div className="text-left font-medium p-2">{course}</div>;
+      return (
+        <div className="text-left font-medium p-2">
+          {course ? course : "Sin clase"} {/* Handle a null case */}
+        </div>
+      );
     },
   },
   {
@@ -69,11 +73,11 @@ export const columns: ColumnDef<User>[] = [
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(user.id)}
               >
-                Copy payment ID
+                Copy user ID
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
+              <DropdownMenuItem>View details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
