@@ -47,9 +47,10 @@ export default function ForgotPasswordForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300"
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full bg-accent/90 hover:bg-accent">
           Restablecer contraseña
         </Button>
       </form>

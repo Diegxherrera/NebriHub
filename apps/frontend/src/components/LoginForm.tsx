@@ -14,6 +14,7 @@ import SeparatorWithText from "@/components/SeparatorWithText";
 import Cookies from "js-cookie";
 import Google from "../../public/GoogleLogo";
 import Microsoft from "../../public/MicrosoftLogo";
+import ContinueWithButton from "@/components/ContinueWithButton";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
@@ -109,7 +110,7 @@ export default function LoginForm() {
             </div>
             <Link
               href={"/forgot-password"}
-              className="ml-auto inline-block text-sm underline dark:text-gray-400"
+              className="ml-auto inline-block text-sm underline dark:text-gray-300"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -128,21 +129,9 @@ export default function LoginForm() {
           Iniciar sesión
         </Button>
         <SeparatorWithText />
-        <div className="flex justify-around">
-          <Button
-            variant="secondary"
-            className="w-[160px] dark:bg-accent/90 dark:text-white dark:hover:bg-accent gap-2"
-          >
-            Continuar con
-            <Google className="text-white-foreground" />
-          </Button>
-          <Button
-            variant="secondary"
-            className="w-[160px] dark:bg-accent/90 dark:text-white dark:hover:bg-accent gap-2"
-          >
-            Continuar con
-            <Microsoft />
-          </Button>
+        <div className="flex justify-between">
+          <ContinueWithButton icon={<Google />} service={"Google"} />
+          <ContinueWithButton icon={<Microsoft />} service={"Microsoft"} />
         </div>
       </form>
       <div className="mt-4 text-center text-sm">

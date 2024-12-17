@@ -13,6 +13,8 @@ import GeneralSelect from "./GeneralSelect";
 import { Mail, RectangleEllipsis } from "lucide-react";
 import Google from "../../public/GoogleLogo";
 import Microsoft from "../../public/MicrosoftLogo";
+import SeparatorWithText from "@/components/SeparatorWithText";
+import ContinueWithButton from "@/components/ContinueWithButton";
 
 export default function SignUpForm({ userType }: { userType: string }) {
   const [email, setEmail] = useState<string>("");
@@ -123,22 +125,10 @@ export default function SignUpForm({ userType }: { userType: string }) {
         <Button type="submit" className="w-full bg-accent/90 hover:bg-accent">
           Crear cuenta
         </Button>
-        <Separator />
+        <SeparatorWithText />
         <div className="flex justify-around">
-          <Button
-            variant="secondary"
-            className="w-[160px] dark:bg-accent/90 dark:text-white dark:hover:bg-accent gap-2"
-          >
-            Continuar con
-            <Google />
-          </Button>
-          <Button
-            variant="secondary"
-            className="w-[160px] dark:bg-accent/90 dark:text-white dark:hover:bg-accent gap-2"
-          >
-            Continuar con
-            <Microsoft />
-          </Button>
+          <ContinueWithButton icon={<Google />} service={"Google"} />
+          <ContinueWithButton icon={<Microsoft />} service={"Microsoft"} />
         </div>
       </form>
       {message && <p className="mt-4 text-center text-sm">{message}</p>}

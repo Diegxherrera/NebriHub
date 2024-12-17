@@ -140,13 +140,14 @@ export default function GeneralSelect({
   const buttonLabel = selectedItem || `${typeTranslated} no definida`;
 
   const content = (
-    <Command>
+    <Command className="dark:border-gray-900 dark:bg-gray-900 bg-white text-black dark:text-white">
       <CommandInput
         placeholder={`Buscar ${typeTranslated}`}
         autoComplete="off"
         autoCorrect={"off"}
+        className=""
       />
-      <CommandList>
+      <CommandList className="">
         <CommandEmpty>No se encontraron: {typeTranslated}.</CommandEmpty>
         <CommandGroup>
           {items.map((item, index) => (
@@ -154,6 +155,7 @@ export default function GeneralSelect({
               key={`${item}-${index}`} // Asegurarse de que la key sea única
               value={item}
               onSelect={(value) => handleSelect(value)}
+              className="dark:text-white hover:bg-opacity-90 dark:hover:bg-opacity-90 dark:hover:bg-gray-600 transition-colors"
             >
               <Check
                 className={cn(
@@ -177,13 +179,13 @@ export default function GeneralSelect({
         ""
       )}
       {isLoading ? (
-        <Skeleton className="w-[350px] h-[35px] rounded bg-gray-600 flex items-center pl-4 text-sm"></Skeleton>
+        <Skeleton className="w-[350px] h-[35px] rounded bg-gray-100 flex items-center pl-4 text-sm"></Skeleton>
       ) : isDesktop ? (
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300`}
+              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300 hover:bg-gray-100 hover:text-black dark:hover:text-white dark:hover:bg-gray-600`}
             >
               <span className="text-muted-foreground dark:text-white">
                 {buttonLabel}
@@ -200,7 +202,7 @@ export default function GeneralSelect({
           <DrawerTrigger asChild>
             <Button
               variant="outline"
-              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300`}
+              className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300 hover:bg-gray-100 hover:text-black dark:hover:text-white dark:hover:bg-gray-600`}
             >
               {buttonLabel}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-75" />
