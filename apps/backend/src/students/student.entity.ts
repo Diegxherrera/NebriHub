@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Subject } from '../subjects/subject.entity';
 import { InstitutionClass } from '../classes/class.entity';
@@ -16,6 +17,7 @@ export class Student {
   id: string;
 
   @OneToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn()
   user: User; // Relación uno a uno con la entidad Usuario
 
   @ManyToOne(
@@ -26,5 +28,5 @@ export class Student {
 
   @ManyToMany(() => Subject)
   @JoinTable()
-  subjects: Subject[];
+  subjects: Subject[]; // Relación Estudiante - Asignaturas
 }

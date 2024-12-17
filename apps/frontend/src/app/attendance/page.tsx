@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/navigation"; // For client-side navigation
 import { AsideMenu } from "@/components/AsideMenu";
 import {
   Tooltip,
@@ -32,14 +33,14 @@ import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
-import GeneralSelect from "@/components/GeneralSelect";
-import Image from "next/image";
 import { UserProvider, useUser } from "@/context/UserContext";
 import { LibraryBig, SquareUserRound } from "lucide-react";
 import NoContentBanner from "@/components/NoContent";
 import AttendanceSkeleton from "@/components/skeletons/AttendanceSkeleton";
 import { Separator } from "@/components/ui/separator";
 import CardSkeleton from "@/components/CardSkeleton";
+import Image from "next/image";
+import NewItemDialog from "@/components/NewItemDialog";
 
 interface Class {
   id: string;
@@ -66,11 +67,11 @@ export default function Attendance() {
 
 export function AttendanceComponent() {
   const [classes, setClasses] = useState<Class[]>([]);
-  const [newClassName, setNewClassName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const { user } = useUser(); // Obtener usuario desde el contexto
+  const { user } = useUser();
+  const router = useRouter(); // To handle redirection
 
-  // Fetch para obtener las clases del usuario (profesor o estudiante)
+  // Fetch user classes
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -82,7 +83,6 @@ export function AttendanceComponent() {
         );
         const { teacherDetails, studentDetails } = response.data;
 
-        // Asignar clases en función del rol del usuario
         if (teacherDetails) {
           setClasses(
             teacherDetails.classes.map((clase: any) => ({
@@ -116,124 +116,55 @@ export function AttendanceComponent() {
 
   if (loading) {
     return (
-      <>
-        <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10">
-          <AttendanceSkeleton />
-        </div>
-      </>
+      <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10">
+        <AttendanceSkeleton />
+      </div>
     );
   }
 
   return (
-    <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10">
-      <p className="text-4xl font-bold">Asistencia</p>
-      <div className="flex mb-5">
-        <p className="leading-relaxed text-muted-foreground mr-4 sm:mr-10 mt-1">
-          La sección de asistencias te permite gestionar el absentismo y se
-          organiza según las clases de tu institución. A continuación, puedes
-          controlar la asistencia de las clases que te hayan sido asignadas.
-        </p>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button className="mt-1">Nueva clase</Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Crear una nueva clase</AlertDialogTitle>
-              <AlertDialogDescription>
-                Las clases que crees aquí serán públicas para todos aquellos a
-                los que des acceso. El coordinador y administradores de la
-                plataforma ven todas las clases creadas aún sin tenerlas
-                asignadas.
-                <div className="my-3">
-                  <Label className="text-gray-900">Nombre de la clase</Label>
-                  <Input
-                    value={newClassName}
-                    onChange={(e) => setNewClassName(e.target.value)}
-                    required
-                    className="mb-2"
-                  />
-                </div>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction>Continuar</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+    <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10 w-full">
+      <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-col justify-between">
+          <p className="text-4xl font-bold">Asistencia</p>
+          <p className="leading-relaxed text-muted-foreground mt-3 mb-5">
+            La sección de asistencias te permite gestionar el absentismo y se
+            organiza según las clases que tu institución tenga.
+          </p>
+        </div>
+        <NewItemDialog type={"class"} />
       </div>
-      <Separator />
 
       <div
         className={
           classes.length === 0
             ? "mt-10 mb-10"
-            : "grid gap-4 mt-8 text-left md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+            : "grid gap-4 mt-8 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
         }
       >
         {classes.length === 0 ? (
-          <>
-            <NoContentBanner />
-          </>
+          <NoContentBanner />
         ) : (
           classes.map((clase) => (
-            <Card
-              key={clase.id}
-              className="relative w-full flex rounded-lg overflow-hidden"
-            >
+            <Card key={clase.id} className="relative w-full flex rounded-lg">
               <div className="w-2/3 p-4 flex flex-col justify-between">
                 <CardHeader className="flex pb-3">
-                  <CardTitle className="text-xl">
-                    <TooltipProvider>
-                      <Tooltip delayDuration={750}>
-                        <TooltipTrigger>{clase.name}</TooltipTrigger>
-                        <TooltipContent>
-                          <p>{clase.name}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </CardTitle>
+                  <CardTitle className="text-xl">{clase.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <TooltipProvider>
-                    <div className="flex gap-2 items-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <LibraryBig className="h-5 w-5" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Asignatura</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <p>
-                        <Link href={`/subjects/${clase.subject}`}>
-                          {clase.subject}
-                        </Link>
-                      </p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <SquareUserRound className="h-5 w-5" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Profesor/a</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <p>
-                        <Link href={`/teachers/${clase.tutorName}`}>
-                          {clase.tutorName}
-                        </Link>
-                      </p>
-                    </div>
-                  </TooltipProvider>
+                  <div className="flex gap-2 items-center">
+                    <LibraryBig className="h-5 w-5" />
+                    <p>{clase.subject}</p>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <SquareUserRound className="h-5 w-5" />
+                    <p>{clase.tutorName}</p>
+                  </div>
                 </CardContent>
                 <CardFooter>
                   <Button>Acceder</Button>
                 </CardFooter>
               </div>
-
               <div className="relative w-1/3 h-full overflow-hidden">
                 <Image
                   src="/login-cover.jpg"
@@ -246,7 +177,6 @@ export function AttendanceComponent() {
           ))
         )}
       </div>
-      <Separator />
     </div>
   );
 }

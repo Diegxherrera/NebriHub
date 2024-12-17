@@ -1,0 +1,97 @@
+Política de Privacidad
+
+1. Introducción
+
+En NebriHub (en adelante, “la Plataforma”), nos comprometemos a proteger su privacidad y garantizar que su información personal se utilice de manera segura y transparente. Esta Política de Privacidad detalla cómo recopilamos, utilizamos, almacenamos y protegemos la información generada y compartida en nuestra Plataforma, incluyendo datos relacionados con proyectos, ejercicios, calificaciones, tareas y otros elementos educativos.
+
+2. Información Recopilada
+
+Al utilizar la Plataforma, recopilamos las siguientes categorías de información:
+
+2.1. Información de Cuenta
+
+- Nombre y apellidos
+- Dirección de correo electrónico (vinculado a Google o Microsoft para autenticación SSO)
+- Identificador único de usuario
+
+2.2. Información Educativa
+
+- Proyectos y tareas creados por el usuario o asignados por docentes.
+- Ejercicios y trabajos entregados.
+- Calificaciones y evaluaciones asignadas por docentes.
+- Comentarios y retroalimentación dentro de proyectos, tareas o ejercicios.
+- Registros de progreso académico, incluyendo desempeño y participación en actividades.
+
+2.3. Información de Uso
+
+- Registros de actividad (fecha y hora de inicio de sesión, tiempo de uso de la plataforma).
+- Interacciones dentro de la Plataforma (mensajes, foros de discusión, entregas y descargas).
+
+2.4. Datos Técnicos
+
+- Dirección IP
+- Tipo de dispositivo y navegador
+- Datos de cookies (ver sección de cookies más adelante).
+
+3. Uso de la Información
+
+La información recopilada se utiliza con los siguientes fines:
+    1.	Gestión de cuentas y autenticación: garantizar el acceso seguro mediante SSO.
+	2.	Administración educativa: facilitar la entrega de tareas, proyectos, ejercicios y calificaciones.
+	3.	Monitoreo del progreso académico: registrar y mostrar el desempeño del usuario en actividades educativas.
+	4.	Mejora de la Plataforma: analizar el uso del sistema para optimizar funcionalidades y experiencia del usuario.
+	5.	Comunicación: enviar notificaciones relacionadas con tareas, fechas de entrega, evaluaciones y mensajes importantes.
+	6.	Cumplimiento legal: cumplir con obligaciones legales o regulatorias relacionadas con la información almacenada.
+
+4. Almacenamiento y Retención de Datos
+
+- Ubicación del almacenamiento: Sus datos se almacenan de forma segura en servidores ubicados en España, que cumplen con estándares de seguridad internacional (como ISO 27001 o GDPR, si aplica).
+- Periodo de retención:
+    - Los datos de usuario (proyectos, tareas y notas) se conservan mientras la cuenta esté activa.
+    - Una vez desactivada la cuenta, los datos se conservarán por un período de [X años/meses] salvo requerimiento legal o solicitud expresa de eliminación.
+
+5. Protección de la Información
+
+Implementamos medidas técnicas y organizativas para proteger su información, incluyendo:
+- Cifrado de datos: tanto en tránsito (SSL/TLS) como en reposo.
+- Control de acceso: únicamente el personal autorizado puede acceder a la información.
+- Monitoreo de seguridad: detección de accesos no autorizados y vulnerabilidades.
+- Copias de seguridad periódicas.
+
+6. Compartición de Datos
+
+No compartimos su información personal con terceros, excepto en las siguientes circunstancias:
+	1.	Proveedores de servicios: empresas que nos brindan servicios de almacenamiento, análisis de datos y funcionalidades necesarias para el funcionamiento de la Plataforma (bajo estrictos acuerdos de confidencialidad).
+	2.	Obligación legal: si una autoridad competente lo requiere para cumplir con procesos legales.
+
+7. Derechos del Usuario
+
+Usted tiene derecho a:
+	1.	Acceder a sus datos personales.
+	2.	Rectificar información inexacta o incompleta.
+	3.	Solicitar la eliminación de datos personales si no son necesarios para los fines recopilados.
+	4.	Oponerse al uso de sus datos.
+	5.	Solicitar la portabilidad de sus datos.
+
+Para ejercer estos derechos, puede contactarnos en: privacidad@nebrihub.es.
+
+8. Uso de Cookies
+
+La Plataforma utiliza cookies y tecnologías similares para:
+	•	Facilitar el inicio de sesión y recordar sus preferencias.
+	•	Analizar el uso de la Plataforma para mejorar sus funcionalidades.
+
+Puede gestionar las preferencias de cookies desde su navegador.
+
+9. Cambios en la Política de Privacidad
+
+Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Cualquier cambio será notificado en la Plataforma o por correo electrónico.
+
+10. Contacto
+
+Si tiene preguntas o inquietudes sobre esta Política de Privacidad, puede comunicarse con nosotros a:
+
+Correo electrónico: soporte@nebrihub.es
+
+NebriHub
+Fecha de última actualización: 17 de Diciembre de 2024

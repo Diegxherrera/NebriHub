@@ -3,44 +3,79 @@ import axios from "axios";
 import { User, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { AsideMenu } from "@/components/AsideMenu";
 import Header from "@/components/Header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MemberCard from "@/components/MemberCard";
 import { UserProvider, useUser } from "@/context/UserContext";
 
-const fetchUsers = async (token: string, user: any) => {
+// Fetch users from API based on user role
+const fetchUsers = async (user: any) => {
   try {
-    if (!user || !user.role) {
-      console.error("User data is missing or role is not defined");
-    }
+    const endpoint = "http://localhost:3005/users";
 
-    let endpoint = "http://localhost:3005/users"; // Default endpoint
+    // Get the JWT token securely
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
 
-    // Conditional logic based on user role and classes
-    if (user.role === "teacher") {
-      endpoint = `http://localhost:3005/teachers/${user.id}/classes`;
-    } else if (user.role === "student") {
-      endpoint = `http://localhost:3005/students/${user.id}/classes`;
-    }
+    console.log("Retrieved token:", token);
 
-    // Make the GET request with Axios, including the token in the headers
+    if (!token) throw new Error("No token found in cookies");
+
     const response = await axios.get(endpoint, {
       headers: {
-        Authorization: `Bearer ${token}`, // JWT token in the headers
+        Authorization: `Bearer ${token}`, // Include the token in the headers
       },
       withCredentials: true,
     });
 
-    return response.data; // Return the data (classes or users) based on the role
+    return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching users:", error.message || error);
     throw error;
   }
 };
 
-// Componente principal de "Members"
+export function MembersComponent() {
+  const { user } = useUser(); // Obtain user context
+  const [data, setData] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!user) {
+      setError("User not authenticated");
+      setLoading(false);
+      return;
+    }
+
+    // Fetch data
+    const fetchData = async () => {
+      try {
+        const users = await fetchUsers(user);
+        setData(users);
+      } catch (err) {
+        setError("Error fetching data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
+  return (
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  );
+}
+
 export default function Members() {
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -54,60 +89,6 @@ export default function Members() {
           <MemberCard />
         </div>
       </UserProvider>
-    </div>
-  );
-}
-
-// Componente para mostrar la lista de usuarios
-export function MembersComponent() {
-  const { user } = useUser(); // Obtener el user desde el contexto
-  const [data, setData] = useState<User[]>([]); // Estado para guardar los usuarios
-  const [loading, setLoading] = useState(true); // Estado para manejar el loading
-  const [error, setError] = useState<string | null>(null); // Estado para manejar errores
-
-  useEffect(() => {
-    // Verificar si el usuario está disponible antes de hacer la petición
-    if (!user) {
-      setError("User not authenticated");
-      setLoading(false);
-      return; // Exit early if user is not available
-    }
-
-    const token = Cookies.get("token"); // Obtener el token JWT de las cookies
-    if (!token) {
-      setError("Authentication token is missing");
-      setLoading(false);
-      return; // Exit early if token is not available
-    }
-
-    // Llamar directamente a la función fetchUsers
-    const fetchData = async () => {
-      try {
-        const users = await fetchUsers(token, user); // Fetch the users based on token and user
-        setData(users); // Guardar los usuarios en el estado
-      } catch (error) {
-        setError("Error fetching users, please try again later");
-        console.log(error); // Manejar el error
-      } finally {
-        setLoading(false); // Quitar el loading después de la petición
-      }
-    };
-
-    fetchData(); // Ejecutar la función de fetch cuando el componente se monte
-  }, [user]); // Dependencia para ejecutar solo cuando el usuario esté disponible // Dependencia para ejecutar solo cuando el usuario esté disponible
-
-  if (loading) {
-    return <div>Loading...</div>; // Mostrar mensaje de carga
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Mostrar mensaje de error si la petición falló
-  }
-
-  return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />{" "}
-      {/* Renderizar la tabla con los datos obtenidos */}
     </div>
   );
 }

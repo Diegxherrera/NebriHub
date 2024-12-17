@@ -25,7 +25,9 @@ export class UserService {
 
   // Listar todos los usuarios
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    const users = await this.userRepository.find();
+    console.log('Users fetched:', users); // Log to verify data exists
+    return users;
   }
 
   // Buscar usuario por email

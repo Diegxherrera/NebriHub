@@ -27,9 +27,9 @@ export default function LoginForm() {
   // Check token and redirect if it exists
   useEffect(() => {
     const token = Cookies.get("token"); // Fetch the JWT token from cookies
-    if (token) {
+    if (token != null) {
       // Optionally validate the token server-side here
-      router.push("/dashboard"); // Redirect to dashboard if token exists
+      router.push("/dashboard"); // Redirect to dashboards if token exists
     }
   }, [router]);
 
@@ -46,7 +46,7 @@ export default function LoginForm() {
       console.log(response.data); // Debug to ensure token is returned
 
       setTitle("Login Successful!");
-      setMessage("Redirecting to dashboard!");
+      setMessage("Redirecting to dashboards!");
 
       const { token } = response.data;
 
@@ -54,7 +54,8 @@ export default function LoginForm() {
       Cookies.set("token", token, {
         path: "/",
         expires: 14, // Expiration in days
-        sameSite: "lax",
+        sameSite: "strict",
+        secure: true,
       });
 
       router.push("/dashboard");

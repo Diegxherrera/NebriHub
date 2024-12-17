@@ -1,35 +1,46 @@
-// middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Definir las rutas que no requieren autenticación
+// Define routes that do not require authentication
 const unprotectedRoutes = ["/login", "/register"];
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token"); // Obtén el token JWT de las cookies
+  const { pathname } = req.nextUrl;
 
-  // Si el usuario intenta acceder a una página protegida sin token, redirigir a login
-  if (!token && !unprotectedRoutes.includes(req.nextUrl.pathname)) {
+  // Retrieve the token from cookies
+  const token = req.cookies.get("token")?.value;
+  console.log("Middleware token:", token); // Check token availability
+
+  // Redirect unauthenticated users
+  if (!token && !unprotectedRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Si el usuario ya está autenticado y trata de acceder a login/register, redirigir a dashboard
-  if (token && ["/login", "/register"].includes(req.nextUrl.pathname)) {
+  // Redirect authenticated users away from unprotected routes
+  if (token && unprotectedRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
-  return NextResponse.next();
+  // If token exists, forward it as a custom header for secure client access
+  const requestHeaders = new Headers(req.headers);
+  if (token) {
+    requestHeaders.set("x-auth-token", token); // Pass token as custom header
+  }
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
-// Aplicar el middleware a todas las rutas protegidas
+// Apply the middleware to protected routes
 export const config = {
   matcher: [
     "/",
-    "/dashboard/:path*",
+    "/dashboard",
     "/attendance/:path*",
-    "/projects/:path*",
     "/members/:path*",
     "/settings/:path*",
-    "/calendar/:path*",
   ],
 };

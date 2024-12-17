@@ -66,7 +66,7 @@ export default function GeneralSelect({
       typeTranslated = "Usuario";
       break;
     case "teachers":
-      typeTranslated = "Profesor/es";
+      typeTranslated = "Profesor";
       break;
     default:
       typeTranslated = "Tipo incorrecto para el select";
@@ -137,7 +137,7 @@ export default function GeneralSelect({
     }
   };
 
-  const buttonLabel = selectedItem || `${typeTranslated} no definida`;
+  const buttonLabel = selectedItem || `${typeTranslated} no definido/a`;
 
   const content = (
     <Command className="dark:border-gray-900 dark:bg-gray-900 bg-white text-black dark:text-white">
@@ -147,8 +147,8 @@ export default function GeneralSelect({
         autoCorrect={"off"}
         className=""
       />
-      <CommandList className="">
-        <CommandEmpty>No se encontraron: {typeTranslated}.</CommandEmpty>
+      <CommandList>
+        <CommandEmpty>No se encontraron {typeTranslated}.</CommandEmpty>
         <CommandGroup>
           {items.map((item, index) => (
             <CommandItem
@@ -187,13 +187,18 @@ export default function GeneralSelect({
               variant="outline"
               className={`${getSizeClass()} justify-between dark:bg-gray-700 dark:border-gray-600 dark:shadow-gray-800 dark:text-white dark:placeholder:text-gray-300 hover:bg-gray-100 hover:text-black dark:hover:text-white dark:hover:bg-gray-600`}
             >
-              <span className="text-muted-foreground dark:text-white">
-                {buttonLabel}
-              </span>
+              <span className="text-black dark:text-white">{buttonLabel}</span>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-75" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className={`${getSizeClass()} p-0`}>
+          <PopoverContent
+            align="start"
+            className={cn(
+              `${getSizeClass()} p-0`,
+              size === "w-full" &&
+                "w-full min-w-[var(--radix-popper-anchor-width)]"
+            )}
+          >
             {content}
           </PopoverContent>
         </Popover>

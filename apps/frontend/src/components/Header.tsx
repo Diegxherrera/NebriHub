@@ -51,7 +51,6 @@ import axios from "axios";
 const pathNameMap: { [key: string]: string } = {
   "/dashboard": "Panel de control",
   "/calendar": "Calendario",
-  "/projects": "Proyectos",
   "/members": "Miembros",
   "/attendance": "Asistencia",
   "/statistics": "Estadísticas",
@@ -116,25 +115,11 @@ export default function Header() {
               Asistencia
             </Link>
             <Link
-              href="/projects"
-              className="flex items-center gap-4 px-2.5 text-foreground"
-            >
-              <PanelsTopLeft className="h-5 w-5" />
-              Proyectos
-            </Link>
-            <Link
               href="/members"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Users2 className="h-5 w-5" />
               Miembros
-            </Link>
-            <Link
-              href="/statistics"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <LineChart className="h-5 w-5" />
-              Estadísticas
             </Link>
             <Link
               href="/settings"

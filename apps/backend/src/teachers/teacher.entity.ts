@@ -1,24 +1,24 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
+  OneToMany,
   ManyToMany,
   JoinTable,
-  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Subject } from '../subjects/subject.entity';
 import { InstitutionClass } from '../classes/class.entity';
+import { Subject } from '../subjects/subject.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Teacher {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
-
-  @Column()
-  surname: string;
+  @OneToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn()
+  user: User; // Relation to the User entity for shared ID
 
   @OneToMany(
     () => InstitutionClass,
